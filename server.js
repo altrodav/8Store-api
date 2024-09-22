@@ -1,41 +1,48 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-const cors = require("cors");
-const PORT = process.env.PORT || 8000;
-const mongoose = require("mongoose");
-require("dotenv").config();
+const cors = require('cors');
+const mongoose = require('mongoose');
+const PORT =  process.env.PORT || 8000;
+require('dotenv').config();
 
-const database = mongoose.connection;
+const Database = mongoose.connection;
 
-database.on("connected",()=>{
-    console.log("Database Connected");
+Database.on('Connected',()=>{
+    console.log("Database connected");
 });
-//Starting Point of the server
+
+// starting point of the server
+
 app.get("/",cors(),(req,res)=>{
-    res.status(200).json("Welcome to 8Store-API, To use the api navigate through /api route");
+    res.status(200).json(
+        "welcome to the Scholar Sphere API"
+    );
 });
 
 var corsOptions = {
-    origin: '*',
-    credentials : true,
+    origin : '*',
+    Credential : true,
     optionSuccessStatus : 200,
     port : PORT,
 };
 
 app.use(cors(corsOptions));
 app.use(express.json());
-//Import route
+
+// import routes
+
 const routes = require("./routes");
 
-// This will help in the navigating the api using /api route
+// this will help in routing in the api using / api route
+
 app.use("/api",routes);
 
 mongoose.connect(process.env.MONGODB_URL);
 
-
-app.listen(PORT,()=>{
-    console.log(`Server started listening on PORT:${PORT}`);
-});
-
+app.listen(PORT, ()=>{
+    console.log(
+        `Server started at port number : ${PORT}`
+    )
+})
 
 module.exports = app;

@@ -6,20 +6,26 @@ const route = express.Router();
 
 route.get("/getUserByNumber",async(req,res)=>{
     try{
+
         const mobileNumber = req.query.mobileNumber;
+
         const result = await userData.findOne({mobileNumber:mobileNumber});
         res.status(200).json({user:result,success:true});
-    }catch(error){
+
+    }
+    catch(error){
         res.status(500).json({success:false});
     }
 });
 
 route.get('/getAllUser',async(req,res)=>{
-    try{
+    try{ 
         const result = await userData.find({});
-        res.status(200).json({users:result});
-    }catch(error){
-        res.status(500).json({message:error.message});
+
+        res.status(200).json({user:result,success:true});
+    }
+    catch(error){
+        res.status(500).json({message:error.message,success:false});
     }
 });
 
@@ -27,7 +33,6 @@ route.post("/addUser",async(req,res)=>{
     try{
         const user = await userData.create({
             name : req.body.name,
-            // photoUrl : req.body.photoUrl,
             mobileNumber : req.body.mobileNumber,
             address : req.body.address,
             nearByLocation : req.body.nearByLocation,
@@ -35,7 +40,8 @@ route.post("/addUser",async(req,res)=>{
             pincode : req.body.pincode,
         });
        res.status(200).json({user:user,success:true});
-    }catch(error){
+    }
+    catch(error){
         res.status(400).json({success:false,message: error.message});
     }
 });
