@@ -5,10 +5,6 @@ name: {
     type: String, 
     required: true 
 },
-// photoUrl:{
-//     type:String,
-//     required: true,
-// },
 mobileNumber: { 
     type: String, 
     required: true
