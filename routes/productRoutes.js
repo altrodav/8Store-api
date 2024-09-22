@@ -10,7 +10,7 @@ route.get("/getProductById",async(req,res)=>{
         const Id = req.query.Id;
 
         const result = await productData.findOne({_id:Id});
-        res.status(200).json({user:result,success:true});
+        res.status(200).json({product:result,success:true});
 
     }
     catch(error){
@@ -22,7 +22,7 @@ route.get('/getAllProduct',async(req,res)=>{
     try{ 
         const result = await productData.find({});
 
-        res.status(200).json({user:result,success:true});
+        res.status(200).json({product:result,success:true});
     }
     catch(error){
         res.status(500).json({message:error.message,success:false});
@@ -31,7 +31,7 @@ route.get('/getAllProduct',async(req,res)=>{
 
 route.post("/addProduct",async(req,res)=>{
     try{
-        const user = await productData.create({
+        const product = await productData.create({
             title:req.body.title,
             category:req.body.category,
             subCategory:req.body.subCategory,
@@ -41,10 +41,10 @@ route.post("/addProduct",async(req,res)=>{
             price:req.body.price,
             description:req.body.description,
         });
-       res.status(200).json({user:user,success:true});
+       res.status(200).json({product:product,success:true});
     }
     catch(error){
-        res.status(400).json({success:false,message: error.message});
+        res.status(400).json({success:false,message:error.message});
     }
 });
 

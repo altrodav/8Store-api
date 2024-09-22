@@ -21,6 +21,15 @@ city:{
     type: String,
     required: true,
 },
+walletAmount:{
+    type: String,
+    required: false,
+    default:0,
+},
+referralCode:{
+    type: String,
+    required: true,
+},
 pincode:{
     type: Number,
     required: true,

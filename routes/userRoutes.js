@@ -37,6 +37,8 @@ route.post("/addUser",async(req,res)=>{
             address : req.body.address,
             nearByLocation : req.body.nearByLocation,
             city : req.body.city,
+            walletAmount:req.body.walletAmount,
+            referralCode:req.body.referralCode,
             pincode : req.body.pincode,
         });
        res.status(200).json({user:user,success:true});
