@@ -17,7 +17,7 @@ app.get("/",cors(),(req,res)=>{
 
 var corsOptions = {
     origin: '*',
-    credentails : true,
+    credentials : true,
     optionSuccessStatus : 200,
     port : PORT,
 };
