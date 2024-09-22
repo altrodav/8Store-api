@@ -1,4 +1,3 @@
-
 const express = require("express");
 const userData = require("../modules/userSchema");
 const route = express.Router();
