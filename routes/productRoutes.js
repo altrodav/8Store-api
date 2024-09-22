@@ -17,6 +17,19 @@ route.get("/getProductById",async(req,res)=>{
         res.status(500).json({success:false});
     }
 });
+route.get("/getProductByCat",async(req,res)=>{
+    try{
+
+        const Cat = req.query.Cat;
+
+        const result = await productData.findOne({category:Cat});
+        res.status(200).json({product:result,success:true});
+
+    }
+    catch(error){
+        res.status(500).json({success:false});
+    }
+});
 
 route.get('/getAllProduct',async(req,res)=>{
     try{ 
