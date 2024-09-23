@@ -8,7 +8,7 @@ route.get("/getUserCart", async (req, res) => {
   try {
     const Id = req.query.Id;
 
-    const result = await cartData.findOne({ userId: Id });
+    const result = await cartData.find({ userId: Id });
     res.status(200).json({ cart: result, success: true });
   } catch (error) {
     res.status(500).json({ success: false });
@@ -33,6 +33,10 @@ route.post("/addCart", async (req, res) => {
       quantity: req.body.quantity,
       size: req.body.size,
       color: req.body.color,
+      price: req.body.price,
+      image: req.body.image,
+      title: req.body.title,
+      shortDiscription: req.body.shortDiscription,
     });
     res.status(200).json({ cart: cart, success: true });
   } catch (error) {

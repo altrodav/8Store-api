@@ -26,6 +26,22 @@ const cartProductSchema = new Schema(
       type: String,
       required: true,
     },
+    price: {
+      type: Number,
+      required: true,
+    },
+    image: {
+      type: String,
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    shortDiscription: {
+      type: String,
+      required: true,
+    }
   },
   { timestamps: true, versionKey: false }
 );
