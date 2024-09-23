@@ -15,7 +15,7 @@ Database.on('Connected',()=>{
 
 app.get("/",cors(),(req,res)=>{
     res.status(200).json(
-        "welcome to the Scholar Sphere API"
+        "welcome to the 8 Store API"
     );
 });
 

@@ -17,12 +17,16 @@ route.get("/getProductById",async(req,res)=>{
         res.status(500).json({success:false});
     }
 });
-route.get("/getProductByCat",async(req,res)=>{
+route.get("/getProductByCategory",async(req,res)=>{
     try{
 
-        const Cat = req.query.Cat;
-
-        const result = await productData.findOne({category:Cat});
+        const category = req.query.category;
+        if (category === "all") {
+            const result = await productData.find({});
+            res.status(200).json({ product: result, success: true });
+            return;
+        }
+        const result = await productData.find({category:category});
         res.status(200).json({product:result,success:true});
 
     }
