@@ -8,7 +8,7 @@ route.get("/getOrderById", async (req, res) => {
   try {
     const Id = req.query.Id;
 
-    const result = await orderSchema.find({ _id: Id });
+    const result = await orderSchema.findOne({ _id: Id });
     res.status(200).json({ order: result, success: true });
   } catch (error) {
     res.status(500).json({ success: false });
