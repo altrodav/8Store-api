@@ -4,6 +4,16 @@ const route = express.Router();
 
 // The parent path of all is "*host-url*/api/orderSchema/*next-routes*"
 
+route.get("/getOrderById", async (req, res) => {
+  try {
+    const Id = req.query.Id;
+
+    const result = await orderSchema.findOne({ _id: Id });
+    res.status(200).json({ order: result, success: true });
+  } catch (error) {
+    res.status(500).json({ success: false });
+  }
+});
 route.get("/getUserOrders", async (req, res) => {
   try {
     const Id = req.query.Id;
