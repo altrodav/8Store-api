@@ -14,8 +14,7 @@ const productSchema = new mongoose.Schema({
     },
     assets: [{
         type: {
-            type: String,
-            enum: ['image', 'video'], // restrict to 'image' or 'video'
+            type: String, // restrict to 'image' or 'video'
             required: true,
         },
         url: {
