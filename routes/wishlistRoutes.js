@@ -9,7 +9,7 @@ route.get("/getUserWishlist", async (req, res) => {
     const Id = req.query.Id;
 
     const result = await wishlist.find({ userId: Id });
-    res.status(200).json({ cart: result, success: true });
+    res.status(200).json({ wishlist: result, success: true });
   } catch (error) {
     res.status(500).json({ success: false });
   }
@@ -19,7 +19,7 @@ route.get("/getAllWishlist", async (req, res) => {
   try {
     const result = await wishlist.find({});
 
-    res.status(200).json({ cart: result, success: true });
+    res.status(200).json({ wishlist: result, success: true });
   } catch (error) {
     res.status(500).json({ message: error.message, success: false });
   }
@@ -27,7 +27,7 @@ route.get("/getAllWishlist", async (req, res) => {
 
 route.post("/addWishlist", async (req, res) => {
   try {
-    const cart = await wishlist.create({
+    const wishlist = await wishlist.create({
       userId: req.body.userId,
       productId: req.body.productId,
       price: req.body.price,
@@ -35,13 +35,13 @@ route.post("/addWishlist", async (req, res) => {
       title: req.body.title,
       shortDiscription: req.body.shortDiscription,
     });
-    res.status(200).json({ cart: cart, success: true });
+    res.status(200).json({ wishlist: wishlist, success: true });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }
 });
 
-// route.put("/updateCart", async (req, res) => {
+// route.put("/updatewishlist", async (req, res) => {
 //   const Id = req.query.Id;
 //   try {
 //     await wishlist.updateOne(
