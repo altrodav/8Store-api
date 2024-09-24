@@ -9,7 +9,7 @@ route.get("/getUserOrders", async (req, res) => {
     const Id = req.query.Id;
 
     const result = await orderSchema.find({ userId: Id });
-    res.status(200).json({ cart: result, success: true });
+    res.status(200).json({ order: result, success: true });
   } catch (error) {
     res.status(500).json({ success: false });
   }
@@ -19,7 +19,7 @@ route.get("/getAllOrder", async (req, res) => {
   try {
     const result = await orderSchema.find({});
 
-    res.status(200).json({ cart: result, success: true });
+    res.status(200).json({ order: result, success: true });
   } catch (error) {
     res.status(500).json({ message: error.message, success: false });
   }
@@ -27,7 +27,7 @@ route.get("/getAllOrder", async (req, res) => {
 
 route.post("/addOrder", async (req, res) => {
   try {
-    const cart = await orderSchema.create({
+    const order = await orderSchema.create({
       userId: req.body.userId,
       productId: req.body.productId,
       quantity: req.body.quantity,
@@ -40,7 +40,7 @@ route.post("/addOrder", async (req, res) => {
       isDelivered: req.body.isDelivered,
       isPaymentDone: req.body.isPaymentDone,
     });
-    res.status(200).json({ cart: cart, success: true });
+    res.status(200).json({ order: order, success: true });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }
