@@ -51,8 +51,6 @@ route.put("/updateCart", async (req, res) => {
       { _id: Id },
       {
         quantity: req.body.quantity,
-        size: req.body.size,
-        color: req.body.color,
       }
     );
     res.status(200).json({ success: true });
