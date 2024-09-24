@@ -38,16 +38,24 @@ const orderSchema = new Schema(
       required: true,
     },
     shortDiscription: {
-      type: String,
-      required: true,
+        type: String,
+        required: true,
     },
-    isDelivered: {
+    isPacked: {
       type: Boolean,
-      default: false, // Order is incomplete by default
+      default: false, // Payment is not done by default
+    },
+    isCallDone: {
+      type: Boolean,
+      default: false, // Payment is not done by default
     },
     isPaymentDone: {
       type: Boolean,
       default: false, // Payment is not done by default
+    },
+    isDelivered: {
+      type: Boolean,
+      default: false, // Order is incomplete by default
     },
   },
   { timestamps: true, versionKey: false }
