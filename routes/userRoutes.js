@@ -4,6 +4,17 @@ const route = express.Router();
 
 // The parent path of all is "*host-url*/api/userData/*next-routes*"
 
+route.get("/getUserById",async(req,res)=>{
+    try{
+        const Id = req.query.Id;
+
+        const result = await userData.findOne({_id:Id});
+        res.status(200).json({user:result,success:true});
+    }
+    catch(error){
+        res.status(500).json({success:false});
+    }
+});
 route.get("/getUserByNumber",async(req,res)=>{
     try{
 
