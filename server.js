@@ -1,48 +1,75 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
-const PORT =  process.env.PORT || 8000;
+const http = require('http'); // To create an HTTP server
+const socketIo = require('socket.io'); // Socket.IO for real-time
+const twilioClient = require("./config/twilio"); // Twilio client
+const morgan = require('morgan'); // HTTP request logger
+const PORT = process.env.PORT || 8000;
 require('dotenv').config();
 
-const Database = mongoose.connection;
+const server = http.createServer(app); // Create HTTP server
+const io = socketIo(server); // Integrate Socket.IO
 
-Database.on('Connected',()=>{
-    console.log("Database connected");
+// Mongoose connection
+mongoose.connect(process.env.MONGODB_URL)
+    .then(() => {
+        console.log("Database connected");
+    })
+    .catch(err => {
+        console.error("Database connection error:", err);
+    });
+
+// Middleware setup
+app.use(cors({
+    origin: '*',
+    credentials: true,
+    optionSuccessStatus: 200,
+}));
+app.use(express.json());
+app.use(cookieParser());
+app.use(morgan('dev')); // Logging middleware
+
+// Starting point of the server
+app.get("/", (req, res) => {
+    res.status(200).json("Welcome to the 8 Store API");
 });
 
-// starting point of the server
-
-app.get("/",cors(),(req,res)=>{
-    res.status(200).json(
-        "welcome to the 8 Store API"
-    );
-});
-
-var corsOptions = {
-    origin : '*',
-    Credential : true,
-    optionSuccessStatus : 200,
-    port : PORT,
+// Function to send OTP using Twilio
+const sendOtp = (phoneNumber, otp) => {
+    twilioClient.messages
+        .create({
+            body: `Your OTP is ${otp}`,
+            from: process.env.TWILIO_PHONE_NUMBER,
+            to: phoneNumber,
+        })
+        .then(() => {
+            io.emit("otpSent", { phoneNumber, otp }); // Emit OTP event through WebSocket
+        })
+        .catch((error) => {
+            console.error("Error sending OTP:", error);
+            io.emit("otpError", { error: "Failed to send OTP" }); // Emit error event
+        });
 };
 
-app.use(cors(corsOptions));
-app.use(express.json());
+// Import user routes and pass 'io' to it
+const userRoutes = require("./routes/userRoutes")(io);  // Pass io for real-time features
+app.use("/api", userRoutes);  // Use userRoutes with '/api' prefix
 
-// import routes
+// Handle Socket.IO connections
+io.on("connection", (socket) => {
+    console.log("New client connected");
 
-const routes = require("./routes");
+    socket.on("disconnect", () => {
+        console.log("Client disconnected");
+    });
+});
 
-// this will help in routing in the api using / api route
-
-app.use("/api",routes);
-
-mongoose.connect(process.env.MONGODB_URL);
-
-app.listen(PORT, ()=>{
-    console.log(
-        `Server started at port number : ${PORT}`
-    )
-})
+// Start listening
+server.listen(PORT, () => {
+    console.log(`Server started at port number: ${PORT}`);
+});
 
 module.exports = app;
