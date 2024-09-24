@@ -4,8 +4,7 @@ const Schema = mongoose.Schema;
 const orderSchema = new Schema(
   {
     userId: {
-      type: Schema.Types.ObjectId, // Reference to the User collection
-      ref: "User",
+      type: String, // Reference to the User collection
       required: true,
     },
     productId: {
@@ -39,16 +38,24 @@ const orderSchema = new Schema(
       required: true,
     },
     shortDiscription: {
-      type: String,
-      required: true,
+        type: String,
+        required: true,
     },
-    isDelivered: {
+    isPacked: {
       type: Boolean,
-      default: false, // Order is incomplete by default
+      default: false, // Payment is not done by default
+    },
+    isCallDone: {
+      type: Boolean,
+      default: false, // Payment is not done by default
     },
     isPaymentDone: {
       type: Boolean,
       default: false, // Payment is not done by default
+    },
+    isDelivered: {
+      type: Boolean,
+      default: false, // Order is incomplete by default
     },
   },
   { timestamps: true, versionKey: false }
