@@ -55,8 +55,8 @@ const sendOtp = (phoneNumber, otp) => {
 };
 
 // Import user routes and pass 'io' to it
-const userRoutes = require("./routes/userRoutes")(io);  // Pass io for real-time features
-app.use("/api", userRoutes);  // Use userRoutes with '/api' prefix
+const Routes = require("./routes")(io);  // Pass io for real-time features
+app.use("/api", Routes);  // Use userRoutes with '/api' prefix
 
 // Handle Socket.IO connections
 io.on("connection", (socket) => {
